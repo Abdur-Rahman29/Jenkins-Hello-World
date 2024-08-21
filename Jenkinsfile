@@ -3,7 +3,7 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     environment {
         // name of the image without tag
-        dockerRepo = "abdur-rahman29/jenkins-hello-world"
+        dockerRepo = "abdurmohammed928/jenkins"
         dockerCredentials = 'dockerhub'
         dockerImageVersioned = ""
         dockerImageLatest = ""
@@ -20,7 +20,7 @@ pipeline {
                  branches: [[name: 'master']],
                  userRemoteConfigs: [[
                     url: 'https://www.github.com/abdur-rahman29/jenkins-hello-world.git',
-                    credentialsId: '',
+                    credentialsId: 'Github',
                  ]]
                 ])
             }
@@ -37,7 +37,7 @@ pipeline {
             steps{
                 script{
                     // if you want to use custom registry, use the first argument, which is blank in this case
-                    docker.withRegistry( 'https://hub.docker.com/repository/docker/abdurmohammed928/jenkins/general', dockerCredentials){
+                    docker.withRegistry( '', dockerCredentials){
                         dockerImageVersioned.push()
                         dockerImageLatest.push()
                     }
