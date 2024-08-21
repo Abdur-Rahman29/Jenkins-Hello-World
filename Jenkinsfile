@@ -37,7 +37,7 @@ pipeline {
             steps{
                 script{
                     // if you want to use custom registry, use the first argument, which is blank in this case
-                    docker.withRegistry( '', dockerCredentials){
+                    docker.withRegistry( 'abdurmohammed928/jenkins', dockerCredentials){
                         dockerImageVersioned.push()
                         dockerImageLatest.push()
                     }
