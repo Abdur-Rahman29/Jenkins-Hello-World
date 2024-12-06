@@ -1,0 +1,20 @@
+trigger:
+- master  # This will trigger the pipeline on changes to the 'master' branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use the latest Ubuntu VM for the build agent
+
+steps:
+# Step 1: Copy the .dacpac file to the staging directory
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'  # Root directory of the repository
+    Contents: 'dacpac_db_demo.dacpac'  # The specific .dacpac file in the root directory
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Staging directory for the artifact
+
+# Step 2: Publish the .dacpac file as a build artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Path to the artifact (staging directory)
+    ArtifactName: 'dacpacArtifact'  # Name for the artifact
+    publishLocation: 'Container'  # Store the artifact in the pipeline container
